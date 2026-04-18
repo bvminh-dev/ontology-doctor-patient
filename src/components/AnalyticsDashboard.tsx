@@ -179,7 +179,7 @@ export default function AnalyticsDashboard({ refreshTrigger = 0 }: AnalyticsDash
                       <div className="w-full h-2 bg-[#F1F4F7] rounded-full overflow-hidden">
                         <div
                           className="h-full bg-[#0064E0] rounded-full transition-all"
-                          style={{ width: `${Math.min(item.percentage, 100)}%` }}
+                          style={{ width: `${Math.min(Number(item.percentage), 100)}%` }}
                         />
                       </div>
                     </div>

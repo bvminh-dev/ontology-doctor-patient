@@ -13,7 +13,8 @@ import ReactFlow, {
   NodeTypes,
   Connection,
   addEdge,
-  EdgeRemoveChange,
+  ConnectionLineType,
+  ConnectionMode,
   OnSelectionChangeParams,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
@@ -187,9 +188,8 @@ export default function OntologyGraph({ refreshTrigger, onSuccess }: OntologyGra
             target: doctor._id,
             type: 'smoothstep',
             animated: true,
-            style: { stroke: '#5D6C7B', strokeWidth: 3, cursor: 'pointer' },
+            style: { stroke: '#5D6B7B', strokeWidth: 3, cursor: 'pointer' },
             className: '!cursor-pointer hover:stroke-[#0064E0]',
-            selectable: true,
           });
 
           // Add medical records as child nodes if expanded
@@ -379,9 +379,8 @@ export default function OntologyGraph({ refreshTrigger, onSuccess }: OntologyGra
   }, [selectedEdges, edges, nodes, setEdges, showMessage, onSuccess, fetchData]);
 
   const onEdgesDelete = useCallback(
-    async (changes: EdgeRemoveChange[]) => {
-      for (const change of changes) {
-        const edge = edges.find((e) => e.id === change.id);
+    async (deletedEdges: Edge[]) => {
+      for (const edge of deletedEdges) {
         if (!edge) continue;
 
         const patientId = edge.source;
@@ -521,11 +520,10 @@ export default function OntologyGraph({ refreshTrigger, onSuccess }: OntologyGra
           onSelectionChange={onSelectionChange}
           onNodeClick={handleNodeClick}
           nodeTypes={nodeTypes}
-          connectionLineType="smoothstep"
-          connectionMode="loose"
+          connectionLineType={ConnectionLineType.SmoothStep}
+          connectionMode={ConnectionMode.Loose}
           fitView
           deleteKeyCode="Delete"
-          selectable
           elementsSelectable
           attributionPosition="bottom-left"
         >

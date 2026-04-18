@@ -241,22 +241,23 @@ async function findSimilarPatients(patientId: string) {
   });
 
   // Convert to array and sort by similarity
-  const similarPatients = await Promise.all(
-    Array.from(patientSimilarity.entries())
-      .sort((a, b) => b[1].similarity - a[1].similarity)
-      .slice(0, 10)
-      .map(async ([patientIdStr, data]) => {
-        const patient = await Patient.findById(patientIdStr).populate('assignedDoctor');
-        return {
-          id: patient._id,
-          name: patient.name,
-          age: patient.age,
-          assignedDoctor: patient.assignedDoctor,
-          similarityScore: data.similarity,
-          commonDiagnoses: [...new Set(data.commonDiagnoses)],
-        };
-      })
-  );
+  const similarPatientsPromises = Array.from(patientSimilarity.entries())
+    .sort((a, b) => b[1].similarity - a[1].similarity)
+    .slice(0, 10)
+    .map(async ([patientIdStr, data]) => {
+      const patient = await Patient.findById(patientIdStr).populate('assignedDoctor');
+      if (!patient) return null;
+      return {
+        id: patient._id,
+        name: patient.name,
+        age: patient.age,
+        assignedDoctor: patient.assignedDoctor,
+        similarityScore: data.similarity,
+        commonDiagnoses: [...new Set(data.commonDiagnoses)],
+      };
+    });
+
+  const similarPatients = (await Promise.all(similarPatientsPromises)).filter((p): p is NonNullable<typeof p> => p !== null);
 
   return NextResponse.json({
     success: true,

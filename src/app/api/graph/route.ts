@@ -63,11 +63,12 @@ async function getNeighbors(params: any) {
     const neighbors: any[] = [];
 
     if (patient?.assignedDoctor) {
+      const doctor = patient.assignedDoctor as any;
       neighbors.push({
         type: 'doctor',
         relationship: 'assigned',
-        id: patient.assignedDoctor._id,
-        ...patient.assignedDoctor.toObject(),
+        id: doctor._id.toString(),
+        ...doctor.toObject(),
       });
     }
 
