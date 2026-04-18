@@ -8,9 +8,11 @@ import PatientList from '@/components/PatientList';
 import OntologyGraph from '@/components/OntologyGraph';
 import MedicalRecordForm from '@/components/MedicalRecordForm';
 import MedicalRecordList from '@/components/MedicalRecordList';
+import AlertDashboard from '@/components/AlertDashboard';
+import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 import { Button } from '@/components/ui/button';
 
-type TabType = 'doctors' | 'patients' | 'ontology' | 'records';
+type TabType = 'doctors' | 'patients' | 'ontology' | 'records' | 'insights';
 
 export default function Home() {
   const [tab, setTab] = useState<TabType>('doctors');
@@ -57,13 +59,25 @@ export default function Home() {
               >
                 Ontology
               </Button>
+              <Button
+                onClick={() => setTab('insights')}
+                variant={tab === 'insights' ? 'default' : 'ghost'}
+                size="sm"
+              >
+                Insights
+              </Button>
             </div>
           </div>
         </div>
       </nav>
 
       <main className="container mx-auto px-6 py-16 max-w-7xl">
-        {tab === 'ontology' ? (
+        {tab === 'insights' ? (
+          <div className="space-y-8">
+            <AlertDashboard refreshTrigger={refreshTrigger} />
+            <AnalyticsDashboard refreshTrigger={refreshTrigger} />
+          </div>
+        ) : tab === 'ontology' ? (
           <OntologyGraph refreshTrigger={refreshTrigger} onSuccess={handleSuccess} />
         ) : tab === 'records' ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
