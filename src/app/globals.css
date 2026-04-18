@@ -1,8 +1,57 @@
 @import "tailwindcss";
 
 :root {
+  /* Meta Store Design System Colors */
+  --meta-blue: #0064E0;
+  --meta-blue-hover: #0143B5;
+  --meta-blue-pressed: #004BB9;
+  --meta-blue-light: #47A5FA;
+  --facebook-blue: #1877F2;
+
+  /* Secondary & Accent Colors */
+  --rayban-red: #D6311F;
+  --oculus-purple: #A121CE;
+  --work-purple: #6441D2;
+  --portal-blue: #1B365D;
+  --portal-hero-blue: #C8E4E8;
+  --portal-light-blue: #ADD4E0;
+
+  /* Surface & Background */
+  --white: #FFFFFF;
+  --soft-gray: #F1F4F7;
+  --warm-gray: #F7F8FA;
+  --web-wash: #F0F2F5;
+  --linen: #F2F0E6;
+  --baby-blue: #E8F3FF;
+  --near-black: #1C1E21;
+  --oculus-light: #181A1B;
+  --oculus-dark: #000000;
+
+  /* Neutrals & Text */
+  --primary-text: #050505;
+  --dark-charcoal: #1C2B33;
+  --icon-secondary: #465A69;
+  --secondary-text: #65676B;
+  --slate-gray: #5D6C7B;
+  --section-header: #4B4C4F;
+  --button-text-gray: #444950;
+  --disabled-text: #BCC0C4;
+  --cta-disabled-text: #8595A4;
+  --divider: #CED0D4;
+  --divider-gray: #DEE3E9;
+  --cta-gray-border: #CBD2D9;
+  --dark-gray-border: #909396;
+
+  /* Semantic & Accent */
+  --success-green: #31A24C;
+  --store-success: #007D1E;
+  --error-red: #E41E3F;
+  --store-error: #C80A28;
+  --warning-amber: #F7B928;
+
+  /* Background & Foreground */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1C2B33;
 }
 
 @theme inline {
@@ -22,5 +71,37 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ReactFlow Edge Styling */
+.react-flow__edge-path {
+  stroke-width: 3;
+  transition: stroke 0.2s, stroke-width 0.2s;
+  cursor: pointer;
+}
+
+.react-flow__edge-path:hover {
+  stroke: #0064E0 !important;
+  stroke-width: 4;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #0064E0 !important;
+  stroke-width: 4;
+}
+
+.react-flow__edge {
+  cursor: pointer;
+}
+
+/* Make edges more clickable */
+.react-flow__edge {
+  pointer-events: all !important;
+}
+
+.react-flow__edge-path {
+  pointer-events: stroke !important;
 }

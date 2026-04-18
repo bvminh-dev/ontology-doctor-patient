@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(npx shadcn-ui@latest init -y)",
+      "Bash(npx shadcn-ui@latest add button card input label table --yes --overwrite)",
+      "Bash(npx shadcn@latest init -y)",
+      "Bash(npx shadcn@latest add button card input label table --yes --overwrite)",
+      "Bash(npm install *)",
+      "Bash(timeout 5 cat C:\\\\Users\\\\BVMINH\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\D--ontology-doctor-patient\\\\b37d0fc9-6f56-435b-9dba-4c6048a168d4\\\\tasks\\\\b4l1xds5t.output)"
     ]
   }
 }
