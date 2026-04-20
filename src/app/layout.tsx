@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Doctor-Patient Management",
+  title: "Doctor-Patient Ontology",
   description: "Ontology-based healthcare management system",
 };
 

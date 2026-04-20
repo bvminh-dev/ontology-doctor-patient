@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Doctor-Patient Management - A web application for managing doctors and patients with an ontology-based approach. Built with Next.js 14 (App Router), MongoDB Atlas, and Tailwind CSS with shadcn/ui components.
+Doctor-Patient Ontology - A web application for managing doctors and patients with an ontology-based approach. Built with Next.js 14 (App Router), MongoDB Atlas, and Tailwind CSS with shadcn/ui components.
 
 ## Common Commands
 

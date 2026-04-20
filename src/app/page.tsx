@@ -28,7 +28,7 @@ export default function Home() {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex items-center justify-between h-14">
             <h1 className="text-xl font-medium text-[#1C2B33]">
-              Doctor-Patient Management
+              Doctor-Patient Ontology
             </h1>
             <div className="flex gap-3">
               <Button

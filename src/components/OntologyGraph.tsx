@@ -467,15 +467,15 @@ export default function OntologyGraph({ refreshTrigger, onSuccess }: OntologyGra
   }
 
   return (
-    <div className="bg-white rounded-[20px] shadow-[0_12px_28px_0_rgba(0,0,0,0.2),0_2px_4px_0_rgba(0,0,0,0.1)] overflow-hidden">
+    <div className="fixed inset-0 bg-white overflow-hidden">
       <div className="p-6 border-b border-[#DEE3E9]">
         <div className="flex items-center justify-between">
-          <div>
+          {/* <div>
             <h3 className="text-lg font-bold text-[#1C2B33]">Doctor-Patient-Medical Records Ontology</h3>
             <p className="text-sm text-[#5D6C7B] mt-1">
               Click patient nodes to expand/collapse medical records. Drag to connect patients with doctors.
             </p>
-          </div>
+          </div> */}
           <div className="flex items-center gap-3">
             {selectedEdges.length > 0 && (
               <Button
@@ -509,7 +509,7 @@ export default function OntologyGraph({ refreshTrigger, onSuccess }: OntologyGra
           </div>
         </div>
       </div>
-      <div style={{ height: '700px' }}>
+      <div className="h-[calc(100vh-88px)]">
         <ReactFlow
           nodes={nodes}
           edges={edges}
