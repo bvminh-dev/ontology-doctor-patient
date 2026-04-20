@@ -1,0 +1,234 @@
+@prefix : <http://example.org/medical/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================
+# Class Declarations (TBox - Terminological Box)
+# ============================================================
+
+:MedicalProfessional rdf:type owl:Class .
+:Doctor rdf:type owl:Class ;
+  rdfs:subClassOf :MedicalProfessional .
+:Patient rdf:type owl:Class .
+:MedicalRecord rdf:type owl:Class .
+:Diagnosis rdf:type owl:Class .
+:Symptom rdf:type owl:Class .
+:Treatment rdf:type owl:Class .
+:Specialty rdf:type owl:Class .
+
+# ============================================================
+# Property Declarations (RBox - Relational Box)
+# ============================================================
+
+# Patient-Doctor Relationship
+:assignedTo rdf:type owl:ObjectProperty ;
+  rdfs:label "assigned to" ;
+  rdfs:domain :Patient ;
+  rdfs:range :Doctor ;
+  rdf:type owl:FunctionalProperty .
+
+:treats rdf:type owl:ObjectProperty ;
+  rdfs:label "treats" ;
+  rdfs:domain :Doctor ;
+  rdfs:range :Patient ;
+  owl:inverseOf :treatedBy .
+
+:treatedBy rdf:type owl:ObjectProperty ;
+  rdfs:label "treated by" ;
+  rdfs:domain :Patient ;
+  rdfs:range :Doctor .
+
+# Medical Record Relationships
+:hasRecord rdf:type owl:ObjectProperty ;
+  rdfs:label "has record" ;
+  rdfs:domain :Patient ;
+  rdfs:range :MedicalRecord .
+
+:createdBy rdf:type owl:ObjectProperty ;
+  rdfs:label "created by" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range :Doctor .
+
+:forPatient rdf:type owl:ObjectProperty ;
+  rdfs:label "for patient" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range :Patient ;
+  owl:inverseOf :hasRecord .
+
+# Diagnosis and Symptoms
+:hasDiagnosis rdf:type owl:ObjectProperty ;
+  rdfs:label "has diagnosis" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range :Diagnosis .
+
+:hasSymptom rdf:type owl:ObjectProperty ;
+  rdfs:label "has symptom" ;
+  rdfs:domain :Patient ;
+  rdfs:range :Symptom .
+
+:hasSymptomInRecord rdf:type owl:ObjectProperty ;
+  rdfs:label "has symptom in record" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range :Symptom .
+
+# Specialty and Specialization
+:hasSpecialty rdf:type owl:ObjectProperty ;
+  rdfs:label "has specialty" ;
+  rdfs:domain :Doctor ;
+  rdfs:range :Specialty .
+
+:specializesIn rdf:type owl:ObjectProperty ;
+  rdfs:label "specializes in" ;
+  rdfs:subPropertyOf :treats ;
+  rdfs:domain :Doctor ;
+  rdfs:range :Patient .
+
+# Symptom-Specialty Indication
+:indicatesSpecialty rdf:type owl:ObjectProperty ;
+  rdfs:label "indicates specialty" ;
+  rdfs:domain :Symptom ;
+  rdfs:range :Specialty .
+
+# Follow-up
+:requiresFollowUp rdf:type owl:ObjectProperty ;
+  rdfs:label "requires follow up" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range :MedicalRecord .
+
+:followUpDate rdf:type owl:DatatypeProperty ;
+  rdfs:label "follow up date" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range xsd:dateTime .
+
+# ============================================================
+# Data Type Properties
+# ============================================================
+
+:name rdf:type owl:DatatypeProperty ;
+  rdfs:label "name" ;
+  rdfs:range xsd:string .
+
+:age rdf:type owl:DatatypeProperty ;
+  rdfs:label "age" ;
+  rdfs:domain :Patient ;
+  rdfs:range xsd:integer .
+
+:email rdf:type owl:DatatypeProperty ;
+  rdfs:label "email" ;
+  rdfs:range xsd:string .
+
+:phone rdf:type owl:DatatypeProperty ;
+  rdfs:label "phone" ;
+  rdfs:range xsd:string .
+
+:specialtyName rdf:type owl:DatatypeProperty ;
+  rdfs:label "specialty name" ;
+  rdfs:domain :Specialty ;
+  rdfs:range xsd:string .
+
+:visitDate rdf:type owl:DatatypeProperty ;
+  rdfs:label "visit date" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range xsd:dateTime .
+
+:diagnosisName rdf:type owl:DatatypeProperty ;
+  rdfs:label "diagnosis name" ;
+  rdfs:domain :Diagnosis ;
+  rdfs:range xsd:string .
+
+:symptomName rdf:type owl:DatatypeProperty ;
+  rdfs:label "symptom name" ;
+  rdfs:domain :Symptom ;
+  rdfs:range xsd:string .
+
+:treatment rdf:type owl:DatatypeProperty ;
+  rdfs:label "treatment" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range xsd:string .
+
+:notes rdf:type owl:DatatypeProperty ;
+  rdfs:label "notes" ;
+  rdfs:domain :MedicalRecord ;
+  rdfs:range xsd:string .
+
+# Derived Properties (Calculated)
+:hasPatientCount rdf:type owl:DatatypeProperty ;
+  rdfs:label "patient count" ;
+  rdfs:domain :Doctor ;
+  rdfs:range xsd:integer .
+
+:hasRecordCount rdf:type owl:DatatypeProperty ;
+  rdfs:label "record count" ;
+  rdfs:domain :Patient ;
+  rdfs:range xsd:integer .
+
+# ============================================================
+# Alert Properties
+# ============================================================
+
+:alertType rdf:type owl:DatatypeProperty ;
+  rdfs:label "alert type" ;
+  rdfs:range xsd:string .
+
+:alertSeverity rdf:type owl:DatatypeProperty ;
+  rdfs:label "alert severity" ;
+  rdfs:range xsd:string .
+
+:alertTitle rdf:type owl:DatatypeProperty ;
+  rdfs:label "alert title" ;
+  rdfs:range xsd:string .
+
+:alertDescription rdf:type owl:DatatypeProperty ;
+  rdfs:label "alert description" ;
+  rdfs:range xsd:string .
+
+:requiresAttention rdf:type owl:DatatypeProperty ;
+  rdfs:label "requires attention" ;
+  rdfs:range xsd:string .
+
+:followUpStatus rdf:type owl:DatatypeProperty ;
+  rdfs:label "follow up status" ;
+  rdfs:range xsd:string .
+
+:recommendationReason rdf:type owl:DatatypeProperty ;
+  rdfs:label "recommendation reason" ;
+  rdfs:range xsd:string .
+
+:similarityReason rdf:type owl:DatatypeProperty ;
+  rdfs:label "similarity reason" ;
+  rdfs:range xsd:string .
+
+# ============================================================
+# Axioms
+# ============================================================
+
+# Disjoint Classes
+:Doctor owl:disjointWith :Patient .
+:Diagnosis owl:disjointWith :Symptom .
+:MedicalRecord owl:disjointWith :Patient .
+:MedicalRecord owl:disjointWith :Doctor .
+
+# Inverse Properties
+:treatedBy owl:inverseOf :treats .
+:forPatient owl:inverseOf :hasRecord .
+
+# Functional Property (each patient has at most one assigned doctor)
+:assignedTo rdf:type owl:FunctionalProperty .
+
+# ============================================================
+# Inferred Classes (for reasoning)
+# ============================================================
+
+:OverloadedDoctor rdf:type owl:Class ;
+  rdfs:subClassOf :Doctor .
+
+:AvailableDoctor rdf:type owl:Class ;
+  rdfs:subClassOf :Doctor .
+
+:UnassignedPatient rdf:type owl:Class ;
+  rdfs:subClassOf :Patient .
+
+:CriticalDiagnosis rdf:type owl:Class ;
+  rdfs:subClassOf :Diagnosis .

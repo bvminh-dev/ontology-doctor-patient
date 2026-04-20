@@ -1,0 +1,9 @@
+@prefix : <http://example.org/medical/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+{
+  ?s ?p ?o .
+  ?o a :Doctor .
+} => {
+  ?s :connectedTo ?o .
+} .

@@ -11,12 +11,12 @@ interface Alert {
   severity: 'info' | 'warning' | 'critical';
   title: string;
   description: string;
-  actions: Array<{
+  entityUri: string;
+  actions?: Array<{
     label: string;
     type: string;
     target?: string;
   }>;
-  createdAt: string;
 }
 
 interface AlertSummary {
@@ -43,7 +43,7 @@ export default function AlertDashboard({ refreshTrigger = 0 }: AlertDashboardPro
   const fetchAlerts = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/rules/evaluate');
+      const response = await fetch('/api/ontology/reason');
       const result = await response.json();
 
       if (result.success) {
@@ -197,7 +197,7 @@ export default function AlertDashboard({ refreshTrigger = 0 }: AlertDashboardPro
                     <div className="flex-1">
                       <h4 className="font-bold mb-1">{alert.title}</h4>
                       <p className="text-sm opacity-90 mb-3">{alert.description}</p>
-                      {alert.actions.length > 0 && (
+                      {alert.actions && alert.actions.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                           {alert.actions.map((action, index) => (
                             <Button

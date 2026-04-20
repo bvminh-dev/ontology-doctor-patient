@@ -16,7 +16,7 @@ interface OverviewStats {
 interface DiagnosisStats {
   diagnosis: string;
   count: number;
-  percentage: string;
+  percentage: number; // Changed from string to number
 }
 
 interface SpecialtyUtilization {
@@ -45,9 +45,21 @@ export default function AnalyticsDashboard({ refreshTrigger = 0 }: AnalyticsDash
     setLoading(true);
     try {
       const [overviewRes, diagnosesRes, specialtiesRes] = await Promise.all([
-        fetch('/api/analytics?type=overview'),
-        fetch('/api/analytics?type=diagnoses'),
-        fetch('/api/analytics?type=specialty-utilization'),
+        fetch('/api/ontology/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'overview' }),
+        }),
+        fetch('/api/ontology/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'diagnoses' }),
+        }),
+        fetch('/api/ontology/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'specialty-utilization' }),
+        }),
       ]);
 
       const overviewData = await overviewRes.json();
@@ -55,7 +67,9 @@ export default function AnalyticsDashboard({ refreshTrigger = 0 }: AnalyticsDash
       const specialtiesData = await specialtiesRes.json();
 
       if (overviewData.success) setOverview(overviewData.data);
-      if (diagnosesData.success) setDiagnoses(diagnosesData.data);
+      if (diagnosesData.success) {
+        setDiagnoses(diagnosesData.data);
+      }
       if (specialtiesData.success) setSpecialties(specialtiesData.data);
     } catch (err) {
       console.error('Failed to fetch analytics:', err);
@@ -179,7 +193,7 @@ export default function AnalyticsDashboard({ refreshTrigger = 0 }: AnalyticsDash
                       <div className="w-full h-2 bg-[#F1F4F7] rounded-full overflow-hidden">
                         <div
                           className="h-full bg-[#0064E0] rounded-full transition-all"
-                          style={{ width: `${Math.min(Number(item.percentage), 100)}%` }}
+                          style={{ width: `${Math.min(item.percentage, 100)}%` }}
                         />
                       </div>
                     </div>
